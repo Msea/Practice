@@ -3,24 +3,6 @@ def createboard():
    for x in range(3):
       board.append(["O"] * 3)
    return board
-"""def createboard2():
-   board = []
-   for x in range(3):
-      board.append(["Of"] * 3)
-   return board
-def createboard3():
-   board = []
-   for x in range(3):
-      board.append(["j"] * 3)
-   return board
-def createboard4():
-   board = []
-   for x in range(3):
-      board.append(["H"] * 3)
-   return board"""
-
-
-
 
 
 def smoothjoin(A, B, C, D):
@@ -50,12 +32,7 @@ def sepboards(board):
       temp=[]
       for j in range(3):
          temp.append(board[i][j])
-         #print temp
-         #print"s"
       A.append(temp)
-      #print_board(A)
-      #print"d"
-   #print "e"
    for i in range(3):
       temp=[]
       for j in range(3):
@@ -155,12 +132,6 @@ def to_num(a):
 
 
 def placement(user, color, board):
-    #board = smoothjoin(A, B, C, D)
-    """A=sepboards(board)[0]
-    B=sepboards(board)[1]
-    C=sepboards(board)[2]
-    D=sepboards(board)[3]"""
-    #show = joinboards(A, B, C, D)
     show = joinboards(board)
     validplace = False
     validsplace = False
@@ -171,9 +142,6 @@ def placement(user, color, board):
     while (validsplace ==False):
         validrow=False
         validplace = False
-        #print "This is what the game board looks like now"
-        #print""
-        #print_board(show)
         pl = []
         temp = raw_input(user+", in which row (1-6) do you wish to place your marble? ")
         if not((temp=="1")or(temp=="2")or(temp=="3")or(temp=="4")or(temp=="5")or(temp=="6")):
@@ -192,8 +160,6 @@ def placement(user, color, board):
                pl.append(temp)
                validplace = True
         if validplace==True:
-            #print pl[0]
-            #print pl[1]
             if ((board[pl[0]-1][pl[1]-1])=="O"):
                validsplace = True
             else:
@@ -213,10 +179,6 @@ def rotateboard(board, user):
    print""
    print_board(quadboards(board))
    while (validplace==False):
-        #print "This is what the game board looks like now"
-        #print""
-        #print_board(quadboards(A, B, C, D))
-        #print_board(quadboards(board))
         quad = raw_input(user+", which quadrant (A-D) do you wish to rotate? ")
         if not((quad=="A")or(quad=="B")or(quad=="C")or(quad=="D")):
             print "Not an option"
@@ -275,81 +237,53 @@ def win5(five):
    if ((five[0]=='R')or(five[0]=='G')):
       if ((five[0]==five[1])and(five[2]==five[1])and(five[2]==five[3])and(five[3]==five[4])):
          winned=True
-         #print five
-      #print five
-   #print "l"
-   #print five
    return winned
 
 def checkwin(board):
    winned=False
    initals = []
-   #print initals
    for i in range(6):
       for j in range(2):
          temp = []
          for k in range(5):
-            #print"this is a test"
             temp.append(board[i][j+k])
          if(win5(temp)):
-            #print temp
-            #print"this is test part2"
             winned = True
             initals.append([[i, j], "hors"])
-            #print initals
    for i in range(6):
       for j in range(2):
          temp = []
          for k in range(5):
-            #print"this is a test"
             temp.append(board[j+k][i])
          if(win5(temp)):
-            #print temp
-            #print "tes2"
             winned = True
             initals.append([[j, i], "ver"])
-            #print initals
    for i in range(2):
       for j in range(2):
          temp=[]
          for k in range(5):
             temp.append(board[i+k][j+k])
-            #print "thisistest"
          if(win5(temp)):
-            #print temp
-            #print"more ts"   
             winned = True
             initals.append([[i, j], "neg"])
-            #print initals
    for i in range(2):
       for j in range(2):
          temp=[]
          for k in range(5):
             temp.append(board[i+k][j+4-k])
-            #print"test"
-         #print temp
          if(win5(temp)):
-            #print temp
-            #print"test"
             winned = True
             initals.append([[i, j+4], "pos"])
-         #print initals
-   #print winned
-   #print initals
    return (winned, initals)
 
 def whenwin(board, init):
-   #print init
    for point in init:
-      #print point
-      #print point[1]
       if point[1]=="hors":
          for j in range(5):
             board[ (point[0])[0] ] [ (point[0])[1]+j ]=board[(point[0])[0]][(point[0])[1]+j].lower()
       if point[1]=="ver":
          for j in range(5):
             board[(point[0])[0]+j][(point[0])[1]]=board[(point[0])[0]+j][(point[0])[1]].lower()
-            #print board[(point[0])[0]+j][(point[0])[1]]
       if point[1]=="neg":
          for j in range(5):
             board[(point[0])[0]+j][(point[0])[1]+j]=board[(point[0])[0]+j][(point[0])[1]+j].lower()
@@ -410,12 +344,10 @@ while (bestest==False):
       name=nam2
       mar='G'
    b = placement(name, mar, b)
-   #print_board(b)
    if (checkwin(b))[0]:
       bestest=True
       break
    b = rotateboard(b, name)
-   #print_board(b)
    if (checkwin(b))[0]:
       bestest=True
    player = not player
@@ -437,102 +369,3 @@ elif(onwon):
 elif(towon):
    print nam2 + " wins."
 print "The lower-case letters indicate winning 5 in a row."
-
-
-"""
-print_board(joinboards(A, B, C, D))
-print""
-print_board(smoothjoin(A, B, C, D))
-print""
-print_board(sepboards(smoothjoin(A, B, C, D))[0])
-print "B is below"
-print_board(sepboards(smoothjoin(A, B, C, D))[1])
-print "c is below"
-print_board(sepboards(smoothjoin(A, B, C, D))[2])
-print "and andadnakfjgbfnakd d"
-print_board(sepboards(smoothjoin(A, B, C, D))[3])
-print_board(joinboards(A, B, C, D))
-print_board(quadboards(A, B, C, D))
-b = placement("user", "n", A, B, C, D)
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-rotateboard(A, B, C, D, "uesser")
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = placement("user", "k", A, B, C, D)
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = rotateboard(A, B, C, D, "uesser")
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = placement("user", "q", A, B, C, D)
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-
-b = rotateboard(A, B, C, D, "uesser")
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = placement("user", "w", A, B, C, D)
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = rotateboard(A, B, C, D, "uesser")
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = placement("user", "p", A, B, C, D)
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = rotateboard(A, B, C, D, "uesser")
-A = (sepboards(b))[0]
-B = (sepboards(b))[1]
-C = (sepboards(b))[2]
-D = (sepboards(b))[3]
-print_board(joinboards(A, B, C, D))
-b = placement("user", "b", A, B, C, D)
-
-
-b = placement(name, mar, A, B, C, D)
-   A = (sepboards(b))[0]
-   B = (sepboards(b))[1]
-   C = (sepboards(b))[2]
-   D = (sepboards(b))[3]
-   print_board(joinboards(A, B, C, D))
-   if (checkwin(b))[0]:
-      bestest=True
-      break
-   b = rotateboard(A, B, C, D, name)
-   A = (sepboards(b))[0]
-   B = (sepboards(b))[1]
-   C = (sepboards(b))[2]
-   D = (sepboards(b))[3]
-   print_board(joinboards(A, B, C, D))
-   if (checkwin(b))[0]:
-      bestest=True
-   player = not player
-"""
