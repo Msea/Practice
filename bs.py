@@ -6,15 +6,15 @@ def print_board(board):
 def stealth_print(board):
     for row in board:
         for thing in row:
-            if (not(thing =="a") and (not(thing =="b")) and (not(thing =="c")) and (not(thing =="d")) and (not(thing =="s"))):
+            if not(ord(thing)>=97)or not(ord(thing)<116):
                 print thing,
             else:
                 print "O",
         print ""
 
-def hide(ship, board, leng, i):
-    v = False
-    valid = 0
+def hide(ship, board, leng, i):#human hides ship
+    v = False #tests whether input is on board
+    valid = 0 #tests whether input is repetitive
     print "Next you must hide your " + ship
     while valid<1:
         valid=0
@@ -134,16 +134,8 @@ def win(board):
     winned = True
     for row in board:
         for point in row:
-            if (point == "a"):
-                winned = False
-            elif (point =='b'):
-                winned = False
-            elif (point =='c'):
-                winned = False
-            elif (point =='d'):
-                winned = False
-            elif (point =='s'):
-                winned = False
+            if (97<=ord(point)<116):
+                winned=False
     return winned
 
 def sunk(board, i):
@@ -154,43 +146,24 @@ def sunk(board, i):
                 sunked = False
     return sunked
 
+def nameize(letter):
+   ships={"a":"Aircraft Carrier", "b": "Battleship", "c":"Cruiser", "d": "Destroyer", "s": "Submarine"}
+   return ships[letter]
+
 def guess(board, guess):
     new = False
-    if (board[guess[0]][guess[1]] == 'O'):
+    if (97<=ord(board[guess[0]][guess[1]])<116):
+        new = True
+        print nameize(board[guess[0]][guess[1]])+" has been hit!"
+        board[guess[0]][guess[1]]=board[guess[0]][guess[1]].upper()
+        if sunk(board, board[guess[0]][guess[1]].lower()):
+          print nameize(board[guess[0]][guess[1]].lower())+" has been sunk"
+    elif (board[guess[0]][guess[1]] == 'O'):
         new = True
         board[guess[0]][guess[1]] = 'X'
         print "Splash!!"
-    elif (board[guess[0]][guess[1]] == 'a'):
-        new = True
-        board[guess[0]][guess[1]] = 'A'
-        print "Aircraft Carrier has been hit!"
-        if sunk(board, 'a'):
-            print "Aircraft Carrier has been sunk"
-    elif (board[guess[0]][guess[1]] == 'b'):
-        new = True
-        board[guess[0]][guess[1]] = 'B'
-        print "Battleship has been hit!"
-        if sunk(board, 'b'):
-            print "Battleship has been sunk"
-    elif (board[guess[0]][guess[1]] == 'c'):
-        new = True
-        board[guess[0]][guess[1]] = 'C'
-        print "Cruiser has been hit!"
-        if sunk(board, 'c'):
-            print "Cruiser has been sunk"
-    elif (board[guess[0]][guess[1]] == 'd'):
-        new = True
-        board[guess[0]][guess[1]] = 'D'
-        print "Destroyer has been hit!"
-        if (sunk(board, 'd')):
-            print "Destroyer has been sunk"
-    elif (board[guess[0]][guess[1]] == 's'):
-        new = True
-        board[guess[0]][guess[1]] = 'S'
-        print "Submarine has been hit!"
-        if sunk(board, 's'):
-            print "Submarine has been sunk"
     return(board, new)
+
 
 def humanguess(board):
     validguess = False
